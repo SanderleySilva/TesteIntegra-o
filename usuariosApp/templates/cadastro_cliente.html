@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container d-flex justify-content-center align-items-center vh-100">
+    <div class="card shadow-lg p-4 bg-light" style="max-width: 400px;">
+      <h2 class="text-center mb-4 fw-bold">Cadastro</h2>
+      <form method="POST">
+        {% csrf_token %}
+
+        <div class="mb-3">
+          <label for="nome" class="form-label">Nome</label>
+          <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="sobrenome" class="form-label">Sobrenome</label>
+          <input type="text" name="sobrenome" class="form-control" placeholder="Sobrenome" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" name="email" class="form-control" placeholder="email@email.com" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password1" class="form-label">Senha</label>
+          <input type="password" name="password1" class="form-control" placeholder="Senha" required>
+        </div>
+
+        <div class="mb-3">
+          <label for="password2" class="form-label">Confirmar senha</label>
+          <input type="password" name="password2" class="form-control" placeholder="Confirmar senha" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary w-100">Cadastrar</button>
+      </form>
+
+      <div class="text-center mt-3">
+        <p>Já tem uma conta? <a href="{% url 'login_cliente' %}" class="text-primary">Faça o login aqui</a>.</p>
+      </div>
+    </div>
+  </div>
+{% endblock %}
