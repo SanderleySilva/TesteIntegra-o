@@ -1,7 +1,64 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block content %}
-    <div class="container">
-        <h1>Área dos produtos aqui</h1>
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">Produtos da Loja</h2>
+    <div class="row justify-content-center">
+        {% for produto in produtos %}
+        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+            <div class="card h-100 shadow-sm">
+                {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" class="card-img-top" alt="{{ produto.nome }}"
+                     style="height: 180px; object-fit: contain; background-color: #fff;">
+                {% endif %}
+                <div class="card-body d-flex flex-column">
+                    <h6 class="card-title mb-2">{{ produto.nome }}</h6>
+                    <p class="card-text mb-1">
+                        <small><strong>Cartão:</strong> R$ {{ produto.preco_cartao }}</small><br>
+                        <small><strong>Pix:</strong> R$ {{ produto.preco_pix }}</small>
+                    </p>
+                    <button type="button" class="btn btn-outline-primary btn-sm mt-auto" data-bs-toggle="modal" data-bs-target="#modalProduto{{ produto.id }}">
+                        Ver mais
+                    </button>
+                </div>
+            </div>
+        </div>
+
+       <!-- Modal menor -->
+<div class="modal fade" id="modalProduto{{ produto.id }}" tabindex="-1" aria-labelledby="modalLabel{{ produto.id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel{{ produto.id }}">{{ produto.nome }}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+            </div>
+            <div class="modal-body">
+                {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}"
+                     class="mb-3"
+                     alt="{{ produto.nome }}"
+                     style="width: 100%; height: 250px; object-fit: contain; background-color: #f8f9fa; border-radius: 5px;">
+                {% endif %}
+                <p><strong>Cartão:</strong> R$ {{ produto.preco_cartao }}</p>
+                <p><strong>Pix:</strong> R$ {{ produto.preco_pix }}</p>
+                {% if produto.descricao %}
+                <p><strong>Descrição:</strong> {{ produto.descricao }}</p>
+                {% endif %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Fechar</button>
+                <a href="#" class="btn btn-success btn-sm">Comprar</a>
+            </div>
+        </div>
     </div>
+</div>
+        {% endfor %}
+    </div>
+
+    {% if produtos|length == 0 %}
+    <p class="text-center">Nenhum produto disponível.</p>
+    {% endif %}
+</div>
 
 {% endblock %}
